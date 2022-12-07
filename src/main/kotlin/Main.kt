@@ -7,7 +7,7 @@ import java.net.URL
 
 fun main(args: Array<String>) {
 //    val url = input(1)
-    println(solve02(example(2)))
+    println(solve02_2(example(2)))
 }
 
 
@@ -66,9 +66,9 @@ infix fun Hand.wins(other: Hand) = when (this) {
 }
 
 infix fun Hand.outcome(other: Hand): Int = when {
-    this wins other -> 6
-    other wins this -> 0
-    else -> 3
+    this wins other -> Result.Win.score
+    other wins this -> Result.Lose.score
+    else -> Result.Draw.score
 }
 
 infix fun Hand.play(other: Hand): Int = score + outcome(other)
@@ -76,5 +76,38 @@ infix fun Hand.play(other: Hand): Int = score + outcome(other)
 val solve02: Solve<Int> = { data ->
     data
         .map { Pair(it.first().toHand(), it.last().toHand()) }
-        .sumOf { (a, b) -> a play b }
+        .sumOf { (opponent, you) -> you play opponent }
+}
+
+enum class Result(val score: Int) { Win(6), Draw(3), Lose(0) }
+
+fun Char.toResult() = when (this) {
+    'X' -> Result.Lose
+    'Y' -> Result.Draw
+    'Z' -> Result.Win
+    else -> throw IllegalArgumentException("Unknown result: $this")
+}
+
+fun Hand.wonBy() = when (this) {
+    Hand.Rock -> Hand.Scissors
+    Hand.Paper -> Hand.Rock
+    Hand.Scissors -> Hand.Paper
+}
+
+fun Hand.lostBy() = when (this) {
+    Hand.Rock -> Hand.Paper
+    Hand.Paper -> Hand.Scissors
+    Hand.Scissors -> Hand.Rock
+}
+
+infix fun Hand.whichGives(result: Result) = when (result) {
+    Result.Win -> lostBy()
+    Result.Draw -> this
+    Result.Lose -> wonBy()
+}
+
+val solve02_2: Solve<Int> = { data ->
+    data
+        .map { Pair(it.first().toHand(), it.last().toResult()) }
+        .sumOf { (opponent, result) -> opponent.whichGives(result).score + result.score }
 }
