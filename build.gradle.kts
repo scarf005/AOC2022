@@ -12,13 +12,15 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 val kotestVesion = "5.5.4"
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation("com.github.quickbirdstudios.NonEmptyCollections:NonEmptyCollections:1.1.0")
 
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.22")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVesion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVesion")
     testImplementation("io.kotest:kotest-property:$kotestVesion")
@@ -31,7 +33,7 @@ tasks.withType<Test>().configureEach {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 }
 
