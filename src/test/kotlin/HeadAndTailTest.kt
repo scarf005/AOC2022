@@ -8,19 +8,20 @@ import io.kotest.property.arbitrary.pair
 import io.kotest.property.checkAll
 import io.kotest.property.forAll
 
+@Suppress("unused")
 @ExperimentalStdlibApi
-object HeadAndTail : StringSpec({
+object HeadAndTailTest : StringSpec({
     "[] -> NoSuchElementException" {
         shouldThrow<NoSuchElementException> {
             emptyList<Int>().headAndTail()
         }
     }
-    "[a] -> (a, [])" {
+    "[a] -> ([a], [])" {
         forAll<Int> {
             listOf(it).headAndTail() == Pair(it, emptyList<Int>())
         }
     }
-    "[a, ...rest] -> (a, rest)" {
+    "[a, ...rest] -> ([a], [...rest])" {
         checkAll(Arb.pair(Arb.int(), Arb.list(Arb.int(), 1..<100))) { (a, b) ->
             (listOf(a) + b).headAndTail() shouldBe Pair(a, b)
         }

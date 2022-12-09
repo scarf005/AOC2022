@@ -9,16 +9,16 @@ fun <T> List<T>.initAndLast() = dropLast(1) to last()
  */
 fun <T> Iterable<T>.splitBy(n: Int) = take(n) to drop(n)
 
-fun <T> Collection<T>.cutHalf() = splitBy(size / 2)
+//fun <T> Collection<T>.cutHalf() = splitBy(size / 2)
 
 /**
  * flatten with separators inserted.
  *
  *  @param separator the separator to insert between each element
  */
-fun <T> List<T>.flattenWith(separator: T): List<T> {
+fun <T> List<List<T>>.flattenWith(separator: T): List<T> {
     val (init, last) = initAndLast()
-    val mapped = init.asSequence().flatMap { sequenceOf(it, separator) }
+    val mapped = init.asSequence().flatMap { it + separator }
     return (mapped + last).toCollection(ArrayList())
 }
 
