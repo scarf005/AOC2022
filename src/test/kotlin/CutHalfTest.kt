@@ -5,6 +5,7 @@ import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.pair
 import io.kotest.property.forAll
 
+@Suppress("unused")
 object CutHalfTest : StringSpec({
     "[...].cutHalf(0) -> ([...], [])" {
         forAll<List<Int>> { list ->
