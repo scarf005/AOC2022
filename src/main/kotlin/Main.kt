@@ -1,43 +1,41 @@
-import com.quickbirdstudios.nonEmptyCollection.list.NonEmptyList
-import com.quickbirdstudios.nonEmptyCollection.unsafe.UnsafeNonEmptyCollectionApi
-import com.quickbirdstudios.nonEmptyCollection.unsafe.toNonEmptyList
-import java.io.BufferedReader
-import java.io.File
-import java.net.URL
+import solutions.day01
 
-fun main(args: Array<String>) {
+fun main() {
+    day01()
 //    val url = input(1)
-    println(solve02_2(example(2)))
+//    println(solve02_2(example(2)))
 }
 
+//typealias TestData = NonEmptyList<String>
 
-typealias TestData = NonEmptyList<String>
+//fun Int.twoDigit() = if (this < 10) "0$this" else "$this"
 
-fun Int.twoDigit() = if (this < 10) "0$this" else "$this"
+//@OptIn(UnsafeNonEmptyCollectionApi::class)
+//fun example(day: Int) = File("src/main/resources/${day.twoDigit()}.txt").readLines().toNonEmptyList()
+//
+//@OptIn(UnsafeNonEmptyCollectionApi::class)
+//fun input(day: Int): TestData {
+//    val url = URL("https://adventofcode.com/2022/day/$day/input")
+//    val connection = url.openConnection().apply {
+//        setRequestProperty("Cookie", "session=${System.getenv("AOC_SESSION")}")
+//    }
+//    // add header
+//    return BufferedReader(connection.getInputStream().reader()).readLines().toNonEmptyList()
+//}
 
-@OptIn(UnsafeNonEmptyCollectionApi::class)
-fun example(day: Int) = File("src/main/resources/${day.twoDigit()}.txt").readLines().toNonEmptyList()
+/*
 
-@OptIn(UnsafeNonEmptyCollectionApi::class)
-fun input(day: Int): TestData {
-    val url = URL("https://adventofcode.com/2022/day/$day/input")
-    val connection = url.openConnection().apply {
-        setRequestProperty("Cookie", "session=${System.getenv("AOC_SESSION")}")
-    }
-    // add header
-    return BufferedReader(connection.getInputStream().reader()).readLines().toNonEmptyList()
-}
 
-typealias Solve<T> = (TestData) -> T
+typealias SolveFun<T> = (TestData) -> T
 
-val solve01: Solve<Int> = {
+val solve01: SolveFun<Int> = {
     it
         .splitWhen(String::isBlank)
         .map { array -> array.map(String::toInt) }
         .maxOf { it.sum() }
 }
 
-val solve01_2: Solve<Int> = { data ->
+val solve01_2: SolveFun<Int> = { data ->
     data
         .splitWhen(String::isBlank)
         .asSequence()
@@ -73,7 +71,7 @@ infix fun Hand.outcome(other: Hand): Int = when {
 
 infix fun Hand.play(other: Hand): Int = score + outcome(other)
 
-val solve02: Solve<Int> = { data ->
+val solve02: SolveFun<Int> = { data ->
     data
         .map { Pair(it.first().toHand(), it.last().toHand()) }
         .sumOf { (opponent, you) -> you play opponent }
@@ -106,8 +104,9 @@ infix fun Hand.whichGives(result: Result) = when (result) {
     Result.Lose -> wonBy()
 }
 
-val solve02_2: Solve<Int> = { data ->
+val solve02_2: SolveFun<Int> = { data ->
     data
         .map { Pair(it.first().toHand(), it.last().toResult()) }
         .sumOf { (opponent, result) -> opponent.whichGives(result).score + result.score }
 }
+*/
