@@ -1,9 +1,6 @@
-fun <T> combine(y: T, h: List<T>, ys: List<T>, t: Nested<T>): Nested<T> {
-    val foo = (listOf(y) + h)
-    val arr = listOf(ys) + t
-    val bar = arr.transpose()
-    return listOf(foo) + bar
-}
+fun <T> combine(y: T, h: List<T>, ys: List<T>, t: Nested<T>): Nested<T> =
+    listOf(listOf(y) + h) + (listOf(ys) + t).transpose()
+
 
 fun <T> Nested<T>.transpose(): Nested<T> = when {
     isEmpty() -> emptyList()
@@ -15,9 +12,8 @@ fun <T> Nested<T>.transpose(): Nested<T> = when {
     }
 }
 
-/*
-123
-456
-789
+/** @returns a nested list rotated 90 degrees clockwise */
+fun <T> Nested<T>.rotateRight(): Nested<T> = transpose().map { it.reversed() }
 
- */
+/** @returns a nested list rotated 90 degrees counter-clockwise */
+fun <T> Nested<T>.rotateLeft(): Nested<T> = transpose().reversed()

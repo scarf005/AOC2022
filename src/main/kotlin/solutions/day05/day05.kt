@@ -1,7 +1,5 @@
 package solutions.day05
 
-import transpose
-
 //fun parse(input: String): Pair<List<String>, Sequence<String>> {
 //    val (containers, moves) = input.lines().splitWhen(String::isBlank).toList().let { it[0].toList() to it[1].asSequence() }
 //
@@ -48,12 +46,7 @@ fun String.parseMove(): Triple<Int, Int, Int> =
 
 fun day05() {
 //    val foo = listOf(listOf('!', 'D'), listOf('N', 'C'), listOf('Z', 'M', 'P'))
-    val foo = "123456789".chunked(3).map { it.toList() }
-    println(foo)
-    println(foo.transpose())
-//    147
-//    258
-//    369
+//    val foo = "1234".chunked(2).map { it.toList() }
 
 
 //    val data = Problem(2022, 5).example
