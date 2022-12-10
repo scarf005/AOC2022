@@ -1,6 +1,4 @@
-import com.quickbirdstudios.nonEmptyCollection.list.NonEmptyList
 import com.quickbirdstudios.nonEmptyCollection.unsafe.UnsafeNonEmptyCollectionApi
-import com.quickbirdstudios.nonEmptyCollection.unsafe.toNonEmptyList
 import java.net.URL
 import kotlin.io.path.*
 
@@ -22,19 +20,18 @@ private fun Int.twoDigit() = if (this < 10) "0$this" else this.toString()
  */
 data class Problem(val year: Int, val day: Int) {
     @Suppress("unused")
-    @OptIn(UnsafeNonEmptyCollectionApi::class)
-    val example: NonEmptyList<String> by lazy { examplePath.readLines().toNonEmptyList() }
+    val example: Sequence<String> by lazy { examplePath.readLines().asSequence() }
 
     @OptIn(UnsafeNonEmptyCollectionApi::class)
-    val input: NonEmptyList<String> by lazy {
+    val input: Sequence<String> by lazy {
         when {
             inputPath.exists() -> inputPath.readLines()
-            else -> fetchInput().also { saveInput(it) }.lines()
-        }.toNonEmptyList()
+            else -> fetchInput().also { saveInput(it) }.trim().lines()
+        }.asSequence()
     }
 
     private val examplePath = resourcesPath / day.twoDigit() withSuffix (".txt")
-    private val inputPath = configPath / year.toString() / "input" / day.twoDigit() withSuffix (".txt")
+    private val inputPath = configPath / year.toString() / day.twoDigit() withSuffix (".txt")
     private fun saveInput(text: String) = inputPath.also { it.parent.toFile().mkdirs() }.writeText(text)
     private fun fetchInput() =
         URL("$BASE_URL/$year/day/$day/input")
