@@ -1,4 +1,6 @@
-private tailrec fun <T> Collection<T>.f(p: (T) -> Boolean, agg: Collection<T>, acc: nested<T>): nested<T> =
+typealias Nested<T> = Collection<Collection<T>>
+
+private tailrec fun <T> Collection<T>.f(p: (T) -> Boolean, agg: Collection<T>, acc: Nested<T>): Nested<T> =
     when {
         isEmpty() -> acc + arrayOf(agg)
         else -> when {
@@ -7,4 +9,4 @@ private tailrec fun <T> Collection<T>.f(p: (T) -> Boolean, agg: Collection<T>, a
         }
     }
 
-fun <T> Collection<T>.splitWhen(p: (T) -> Boolean): nested<T> = f(p, emptyList(), emptyList())
+fun <T> Collection<T>.splitWhen(p: (T) -> Boolean): Nested<T> = f(p, emptyList(), emptyList())
