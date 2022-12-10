@@ -1,9 +1,12 @@
+package listutils
+
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.pair
 import io.kotest.property.forAll
+import splitBy
 
 @Suppress("unused")
 object CutHalfTest : StringSpec({
