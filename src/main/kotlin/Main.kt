@@ -1,30 +1,11 @@
-import solutions.day01
-
 fun main() {
-    day01()
-//    val url = input(1)
-//    println(solve02_2(example(2)))
+    val day03 = Problem(2022, 3)
+    println(day03.input)
 }
 
-//typealias TestData = NonEmptyList<String>
-
-//fun Int.twoDigit() = if (this < 10) "0$this" else "$this"
-
-//@OptIn(UnsafeNonEmptyCollectionApi::class)
-//fun example(day: Int) = File("src/main/resources/${day.twoDigit()}.txt").readLines().toNonEmptyList()
-//
-//@OptIn(UnsafeNonEmptyCollectionApi::class)
-//fun input(day: Int): TestData {
-//    val url = URL("https://adventofcode.com/2022/day/$day/input")
-//    val connection = url.openConnection().apply {
-//        setRequestProperty("Cookie", "session=${System.getenv("AOC_SESSION")}")
-//    }
-//    // add header
-//    return BufferedReader(connection.getInputStream().reader()).readLines().toNonEmptyList()
-//}
 
 /*
-
+//typealias TestData = NonEmptyList<String>
 
 typealias SolveFun<T> = (TestData) -> T
 

@@ -10,3 +10,5 @@ fun Path.expandHome(): Path = when (first()) {
     Path("~") -> System.getProperty("user.home").toPath() / drop(1).toPath()
     else -> this
 }
+
+infix fun Path.withSuffix(suffix: String): Path = (parent / (fileName.toString() + suffix))
