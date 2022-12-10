@@ -1,11 +1,7 @@
 package solutions.day03
 
 import Problem
-
-private fun String.cutHalf(): Pair<String, String> {
-    val amount = this.length / 2
-    return this.take(amount) to this.drop(amount)
-}
+import cutHalf
 
 private fun Char.priority(): Int = when (this) {
     in 'a'..'z' -> this - 'a' + 1

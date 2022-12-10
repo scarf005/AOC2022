@@ -21,5 +21,3 @@ fun <T> List<List<T>>.flattenWith(separator: T): List<T> {
     val mapped = init.asSequence().flatMap { it + separator }
     return (mapped + last).toCollection(ArrayList())
 }
-
-typealias nested<T> = Collection<Collection<T>>

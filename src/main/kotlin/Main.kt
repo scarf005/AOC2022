@@ -1,5 +1,5 @@
-import solutions.day03.day03
+import solutions.day05.day05
 
 fun main() {
-    day03()
+    day05()
 }
