@@ -1,8 +1,14 @@
+package listutils
+
+import chunkArb
+import digitArb
+import flattenWith
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.list
 import io.kotest.property.checkAll
+import splitWhen
 
 @Suppress("unused")
 object SplitWhenTest : StringSpec({
