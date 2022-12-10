@@ -1,59 +1,53 @@
 package solutions.day05
 
-//fun parse(input: String): Pair<List<String>, Sequence<String>> {
-//    val (containers, moves) = input.lines().splitWhen(String::isBlank).toList().let { it[0].toList() to it[1].asSequence() }
-//
-//    return containers to moves
-//}
+import Problem
+import rotateRight
+import splitWhen
+
+data class Move(val amount: Int, val from: Int, val to: Int)
+
+typealias Crates = List<List<String>>
+typealias Crate = List<String>
+typealias moveFn = (Crate, Int) -> Crate
+
+fun parseCrates(input: Crate): Crates = input.dropLast(1)
+    .map { it.chunked(4).map { it.trim(' ', '[', ']') } }
+    .rotateRight()
+    .map { it.filter(String::isNotEmpty) }
 
 
-fun parseCrates(input: List<String>) {
-    val height = input.size - 1
-//    val totalStacks = input.last().split(" ").asSequence().filterNot(String::isEmpty).last().toInt()
+private fun oneByOne(fromCrate: Crate, amount: Int): Crate = fromCrate.takeLast(amount).reversed()
+private fun allAtOnce(fromCrate: Crate, amount: Int): Crate = fromCrate.takeLast(amount)
 
-    val crates = input.dropLast(1).map { it.chunked(4).map { it.trim(' ', '[', ']') } }
-        .mapIndexed { index, list ->
-            "H$index" to list.mapIndexed { i, c -> "I$i" to c }.filter { it.second.isNotBlank() }
+
+fun Crates.apply(move: Move, fn: moveFn): Crates {
+    val (amount, from, to) = move
+    val (fromCrate, toCrate) = this[from] to this[to]
+
+    return this.mapIndexed { index, crate ->
+        when (index) {
+            from -> fromCrate.dropLast(amount)
+            to -> toCrate + fn(fromCrate, amount)
+            else -> crate
         }
-    /*
-    .D
-    NC
-    ZMP
-
-     to
-
-     ZN
-     MCD
-     P
-     */
-
-// convert [[(Empty), D], [N, C], [Z, M, P]] into[[Z, N], [M, C, D], [P]]
-//   D
-// N C
-// Z M P
-// ^: H, >: I
-    // Z: I0H2
-
-
-    println(crates.toList())
-    println("height: $height")
+    }
 }
 
-fun String.parseMove(): Triple<Int, Int, Int> =
+
+fun String.parseMove(): Move =
     split(" ")
         .filter { it.all(Char::isDigit) }.map(String::toInt)
-        .let { (a, b, c) -> Triple(a, b, c) }
+        .let { (a, b, c) -> Move(a, from = b - 1, to = c - 1) }
 
 fun day05() {
-//    val foo = listOf(listOf('!', 'D'), listOf('N', 'C'), listOf('Z', 'M', 'P'))
-//    val foo = "1234".chunked(2).map { it.toList() }
+    val data = Problem(2022, 5).input
 
+    val (crates, moves) = data.toList().splitWhen(String::isBlank).toList()
+        .let { parseCrates(it[0].toList()) to it[1].asSequence().map { it.parseMove() } }
 
-//    val data = Problem(2022, 5).example
-//
-//    val (crates, moves) = data.toList().splitWhen(String::isBlank).toList()
-//        .let { it[0].toList() to it[1].asSequence() }
-//
-//    parseCrates(crates)
-//    println(moves)
+    fun Sequence<Move>.solve(fn: moveFn) = fold(crates) { current, move -> current.apply(move, fn) }
+        .joinToString("") { it.last() }
+
+    moves.solve(::oneByOne).also(::println)
+    moves.solve(::allAtOnce).also(::println)
 }

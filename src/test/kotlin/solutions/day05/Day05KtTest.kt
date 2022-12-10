@@ -10,7 +10,7 @@ import io.kotest.property.checkAll
 class Day05KtTest : StringSpec({
     "parseMove" {
         checkAll(Arb.triple(Arb.positiveInt(), Arb.positiveInt(), Arb.positiveInt())) { (a, b, c) ->
-            "move $a from $b to $c".parseMove() shouldBe Triple(a, b, c)
+            "move $a from $b to $c".parseMove() shouldBe Move(a, b - 1, c - 1)
         }
     }
 })
